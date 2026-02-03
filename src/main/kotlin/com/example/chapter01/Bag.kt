@@ -3,23 +3,24 @@ package org.example.com.example.chapter01
 data class Bag(
     private val amount: Long,
     private val invitation: Invitation?,
-    var ticket: Ticket?,
+    private var ticket: Ticket?,
 ) {
     val hasInvitation: Boolean
         get() = invitation != null
 
-    val hasTicket: Boolean
-        get() = ticket != null
+    fun hold(ticket: Ticket): Long {
+        if (hasInvitation) {
+            this.ticket = ticket
+            return 0L
+        } else {
+            this.ticket = ticket
+            minusAmount(ticket.fee)
+            this.ticket = ticket
+            return ticket.fee
+        }
+    }
 
-    fun minusAmount(amount: Long) {
+    private fun minusAmount(amount: Long) {
         this.amount - amount
     }
-
-    fun plusAmount(amount: Long) {
-        this.amount + amount
-    }
-
-    constructor(amount: Long) : this(amount = amount, invitation = null, ticket = null)
-
-    constructor(amount: Long, invitation: Invitation) : this(amount = amount, invitation = invitation, ticket = null)
 }

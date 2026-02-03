@@ -1,0 +1,19 @@
+package org.example.com.example.chapter02
+
+import java.time.DayOfWeek
+import java.time.LocalTime
+
+
+class PeriodCondition(
+    private val dayOfWeek: DayOfWeek,
+    private val startTime: LocalTime,
+    private val endTime: LocalTime
+) : DiscountCondition {
+
+    override fun isSatisfiedBy(screening: Screening): Boolean {
+        val screeningStartTime = screening.getStartTime().toLocalTime()
+
+        return screening.getStartTime().dayOfWeek == dayOfWeek &&
+                screeningStartTime in startTime..endTime
+    }
+}
